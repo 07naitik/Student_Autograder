@@ -21,7 +21,7 @@
             font-weight: bold;
             margin-bottom: 5px;
         }
-        .input-group input[type="text"] {
+        .input-group input[type="file"] {
             width: 100%;
             padding: 8px;
             font-size: 14px;
@@ -47,8 +47,8 @@
     <div class="container">
         <h1>Student Grading</h1>
         <div class="input-group">
-            <label for="marks">Enter student marks (comma-separated):</label>
-            <input type="text" id="marks" name="marks" placeholder="e.g. 85,78,92">
+            <label for="csv-file">Upload student marks CSV file:</label>
+            <input type="file" id="csv-file" name="csv-file" accept=".csv">
         </div>
         <button id="submit-btn">Submit</button>
         <div id="grades-result" class="result"></div>
