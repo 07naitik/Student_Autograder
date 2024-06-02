@@ -1,13 +1,18 @@
 document.getElementById('submit-btn').addEventListener('click', function() {
-    var marksInput = document.getElementById('marks').value;
-    var marksArray = marksInput.split(',').map(Number);
+    var fileInput = document.getElementById('csv-file');
+    var file = fileInput.files[0];
+
+    if (!file) {
+        alert('Please upload a CSV file.');
+        return;
+    }
+
+    var formData = new FormData();
+    formData.append('csv-file', file);
 
     fetch('/grade', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ marks: marksArray })
+        body: formData
     })
     .then(response => response.json())
     .then(data => {
@@ -15,8 +20,7 @@ document.getElementById('submit-btn').addEventListener('click', function() {
         if (data.error) {
             resultDiv.innerHTML = '<p class="error">' + data.error + '</p>';
         } else {
-            var gradesList = data.grades.map((grade, index) => '<li>Student ' + (index + 1) + ': ' + grade + '</li>').join('');
-            resultDiv.innerHTML = '<ul>' + gradesList + '</ul>';
+            resultDiv.innerHTML = '<p>File processed successfully. <a href="/download">Download the result CSV</a>.</p>';
         }
     });
 });
