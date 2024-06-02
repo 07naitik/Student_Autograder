@@ -2,7 +2,6 @@ from flask import Flask, request, render_template, jsonify, send_file
 import pandas as pd
 import numpy as np
 from sklearn.cluster import KMeans
-import os
 
 app = Flask(__name__)
 
@@ -36,7 +35,9 @@ def grade():
     df = pd.read_csv(file)
     try:
         assign_grades(df)
-        return jsonify({'success': True})
+        # Prepare data for visualization
+        data = df.to_dict(orient='records')
+        return jsonify({'grades': data})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
